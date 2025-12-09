@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decor My Event | Satna's Premier Event Booking</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom Config & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050810', // Kept for footer/contrast
+                            purple: '#2e1065',
+                            gold: '#d97706', // Slightly darker gold for better contrast on light bg
+                            goldlight: '#fbbf24',
+                            rose: '#fff1f2', // Light pink start
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Settings */
+        html {
+            font-size: 16px; 
+        }
+        
+        body {
+            /* The requested gradient: Light Pink to White */
+            background: linear-gradient(180deg, #fff1f2 0%, #ffffff 40%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+
+        /* Light Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Subtle Text Gradient */
+        .text-gradient {
+            background: linear-gradient(to right, #b45309, #d97706, #b45309);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Refined Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Zoom Effect */
+        .card-zoom {
+            overflow: hidden;
+        }
+        .card-zoom img {
+            transition: transform 0.7s ease;
+        }
+        .card-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Decorative Background Blob */
+        .bg-blob {
+            position: absolute;
+            background: linear-gradient(to right, #fecdd3, #fce7f3);
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+    <!-- ========================================================================= -->
+
+    <!-- Decorative Blobs -->
+    <div class="bg-blob w-96 h-96 top-0 left-0 animate-blob"></div>
+    <div class="bg-blob w-96 h-96 bottom-0 right-0 animate-blob animation-delay-2000"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                    <span class="font-serif text-xl md:text-2xl font-bold text-slate-900 tracking-wide">Decor My <span class="text-brand-gold">Event</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-brand-gold px-3 py-2 rounded-md text-sm font-bold border-b-2 border-brand-gold">Home</a>
+                        <a href="vendors.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Vendors</a>
+                        <a href="innovation.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Innovation</a>
+                        <a href="#how-it-works" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">How it Works</a>
+                        <a href="contact.html" class="bg-brand-gold text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all transform hover:scale-105 shadow-md hover:shadow-lg shadow-orange-500/20">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-brand-gold p-2 transition-colors">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 absolute w-full shadow-2xl z-50">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#" class="text-brand-gold block px-3 py-3 rounded-md text-base font-bold bg-orange-50">Home</a>
+                <a href="vendors.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Vendors</a>
+                <a href="innovation.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Innovation</a>
+                <a href="#how-it-works" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">How it Works</a>
+                <a href="contact.html" class="text-brand-gold font-bold block px-3 py-3 rounded-md text-base">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- UPDATED: Added background image and overlay -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 bg-[url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat">
+        
+        <!-- Overlay for readability (Direct descent image, no text blurriness) -->
+        <div class="absolute inset-0 bg-white/80 backdrop-blur-[2px] z-0"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <!-- Launch Badge -->
+            <div class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-white border border-rose-100 text-brand-gold text-xs font-bold tracking-widest mb-8 shadow-sm reveal uppercase">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+                </span>
+                Exclusively Launched in Satna
+            </div>
+            
+            <!-- Headline -->
+            <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 leading-tight reveal tracking-tight text-slate-900" style="transition-delay: 100ms;">
+                Your Moment, <br/>
+                <span class="text-brand-gold italic">Our Magic</span>
+            </h1>
+            
+            <p class="text-base md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed reveal" style="transition-delay: 200ms;">
+                Satna's first <strong>one-click decoration marketplace</strong>. We transform your visions into breathtaking realities. From intimate garden proposals to grand palace weddings, connect with the city's finest artisans instantly.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-5 justify-center reveal" style="transition-delay: 300ms;">
+                <!-- Explore Services -->
+                <a href="vendors.html" class="bg-brand-gold text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-orange-500/30 hover:bg-orange-600 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base">
+                    Find Your Style <i class="fa-solid fa-wand-magic text-sm"></i>
+                </a>
+                
+                <!-- Become a Vendor -->
+                <a href="https://wa.me/918827921967?text=Hi,%20I%20want%20to%20become%20a%20vendor%20on%20Decor%20My%20Event!" target="_blank" class="bg-white text-slate-800 border border-slate-200 hover:bg-slate-50 font-bold py-4 px-8 rounded-full transition-all flex items-center justify-center gap-2 text-base shadow-md">
+                    <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i> Become a Vendor
+                </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="mt-12 flex flex-wrap justify-center gap-8 reveal opacity-70 grayscale hover:grayscale-0 transition-all duration-500" style="transition-delay: 400ms;">
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    <i class="fa-solid fa-shield-halved text-brand-gold"></i> Verified Vendors
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    <i class="fa-solid fa-check-circle text-brand-gold"></i> Best Price Guarantee
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    <i class="fa-regular fa-clock text-brand-gold"></i> 24/7 Support
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Introduction -->
+    <section class="py-16 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 reveal">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About Us" class="w-full h-80 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <p class="font-serif italic text-xl">"Details make the design."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 reveal">
+                    <span class="text-brand-gold font-bold uppercase tracking-wider text-xs">Who We Are</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-6 mt-2">Revolutionizing Events in Satna</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Planning an event shouldn't be stressful. <strong>Decor My Event</strong> brings the best local decorators, caterers, and planners to your fingertips. We bridge the gap between your dream event and the reality of execution with transparent pricing and trusted quality.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <div class="bg-rose-100 p-1.5 rounded-full text-brand-gold mt-0.5"><i class="fa-solid fa-check text-xs"></i></div>
+                            <span class="text-slate-700 text-sm">Curated list of Satna's top 10% vendors.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-rose-100 p-1.5 rounded-full text-brand-gold mt-0.5"><i class="fa-solid fa-check text-xs"></i></div>
+                            <span class="text-slate-700 text-sm">Transparent pricing with no hidden markup.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-rose-100 p-1.5 rounded-full text-brand-gold mt-0.5"><i class="fa-solid fa-check text-xs"></i></div>
+                            <span class="text-slate-700 text-sm">End-to-end support from booking to execution.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (New Content) -->
+    <section id="how-it-works" class="py-20 bg-white/50 relative border-y border-rose-100/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-16 reveal">
+                <span class="text-brand-gold font-bold uppercase tracking-wider text-xs">Simple Process</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900 mt-2">How It Works</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-rose-200 -z-10 border-t-2 border-dashed border-rose-200"></div>
+
+                <!-- Step 1 -->
+                <div class="reveal group">
+                    <div class="w-24 h-24 bg-white border-2 border-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10">
+                        <i class="fa-solid fa-magnifying-glass text-3xl text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">1. Browse</h3>
+                    <p class="text-slate-500 text-sm px-4">Explore our curated list of vendors, view detailed portfolios, and compare real prices.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="reveal group" style="transition-delay: 100ms;">
+                    <div class="w-24 h-24 bg-white border-2 border-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10">
+                        <i class="fa-regular fa-calendar-check text-3xl text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">2. Book</h3>
+                    <p class="text-slate-500 text-sm px-4">Select your favorites and book directly through our secure platform with zero fees.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="reveal group" style="transition-delay: 200ms;">
+                    <div class="w-24 h-24 bg-white border-2 border-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10">
+                        <i class="fa-solid fa-champagne-glasses text-3xl text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 mb-3">3. Celebrate</h3>
+                    <p class="text-slate-500 text-sm px-4">Relax and enjoy your event while our partners handle the magic perfectly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <span class="text-brand-gold font-bold uppercase tracking-wider text-xs">Our Expertise</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold mt-2 mb-3 text-slate-900">Curated <span class="text-brand-gold">Experiences</span></h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">We cover everything from small gatherings to grand celebrations.</p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-[280px]">
+                
+                <!-- Wedding -->
+                <div class="md:col-span-2 md:row-span-2 relative group rounded-2xl overflow-hidden card-zoom reveal cursor-pointer shadow-xl">
+                    <img src="wedding.webp" alt="Classic Weddings">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <span class="bg-white/90 backdrop-blur text-brand-gold text-[10px] font-bold px-3 py-1 rounded-full mb-3 inline-block uppercase tracking-wider shadow-sm">Most Popular</span>
+                        <h3 class="font-serif text-3xl font-bold text-white mb-2">Dream Weddings</h3>
+                        <p class="text-gray-200 text-sm max-w-md">From royal mandaps to modern floral aisles, we design weddings that tell your unique love story.</p>
+                    </div>
+                </div>
+
+                <!-- Birthday -->
+                <div class="relative group rounded-2xl overflow-hidden card-zoom reveal cursor-pointer shadow-xl" style="transition-delay: 100ms;">
+                    <img src="birthday.webp" alt="Celebrate Your Happiness">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-xl font-bold text-white">Birthdays</h3>
+                        <p class="text-gray-300 text-xs mt-1">Themed decor & balloon art for all ages.</p>
+                    </div>
+                </div>
+
+                <!-- Anniversary -->
+                <div class="relative group rounded-2xl overflow-hidden card-zoom reveal cursor-pointer shadow-xl" style="transition-delay: 200ms;">
+                    <img src="Anniversary.webp" alt="Luxury Anniversaries">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-xl font-bold text-white">Anniversary</h3>
+                        <p class="text-gray-300 text-xs mt-1">Romantic candlelight dinners & decor.</p>
+                    </div>
+                </div>
+
+                <!-- Corporate -->
+                <div class="relative group rounded-2xl overflow-hidden card-zoom reveal cursor-pointer shadow-xl">
+                    <img src="corporate.webp" alt="Corporate Parties">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="font-serif text-xl font-bold text-white">Corporate</h3>
+                        <p class="text-gray-300 text-xs mt-1">Professional launches & conferences.</p>
+                    </div>
+                </div>
+
+                <!-- View All -->
+                <div class="relative group rounded-2xl overflow-hidden card-zoom reveal cursor-pointer shadow-xl bg-white border border-rose-100 flex items-center justify-center text-center p-5 hover:bg-rose-50 transition-colors" style="transition-delay: 100ms;">
+                    <div class="relative z-10">
+                         <div class="w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl shadow-lg group-hover:scale-110 transition-transform">
+                             <i class="fa-solid fa-arrow-right"></i>
+                         </div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2">View All</h3>
+                        <a href="vendors.html" class="inline-block mt-1 text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Browse Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials (New Content) -->
+    <section class="py-20 bg-rose-50/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-brand-gold font-bold uppercase tracking-wider text-xs">Testimonials</span>
+                <h2 class="font-serif text-3xl font-bold text-slate-900 mt-2">Client Love</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="glass p-8 rounded-2xl reveal relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-rose-200 absolute top-6 left-6 -z-10"></i>
+                    <p class="text-slate-600 italic mb-6 text-sm leading-relaxed">"I was worried about finding a good decorator in Satna for my engagement. Decor My Event made it so easy. The vendor was professional and the decor was exactly like the photos!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">P</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Priya Sharma</h4>
+                            <div class="text-brand-gold text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="glass p-8 rounded-2xl reveal relative" style="transition-delay: 100ms;">
+                    <i class="fa-solid fa-quote-left text-4xl text-rose-200 absolute top-6 left-6 -z-10"></i>
+                    <p class="text-slate-600 italic mb-6 text-sm leading-relaxed">"The transparency is the best part. No haggling, no hidden charges. Booked a birthday setup for my son, and it was hassle-free. Highly recommended."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">R</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Rahul Verma</h4>
+                            <div class="text-brand-gold text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="glass p-8 rounded-2xl reveal relative" style="transition-delay: 200ms;">
+                    <i class="fa-solid fa-quote-left text-4xl text-rose-200 absolute top-6 left-6 -z-10"></i>
+                    <p class="text-slate-600 italic mb-6 text-sm leading-relaxed">"Finally a platform for Satna that actually works. We booked a catering service and the food quality was amazing. Thank you team!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">A</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Anjali Gupta</h4>
+                            <div class="text-brand-gold text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10">
+                <h2 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">Common Questions</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <details class="group p-4 bg-slate-50 rounded-xl cursor-pointer border border-slate-100 transition-all hover:bg-white hover:shadow-md">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 list-none text-sm md:text-base">
+                        <span>How do I book a vendor?</span>
+                        <span class="transition group-open:rotate-180 text-brand-gold"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-slate-600 mt-3 text-sm leading-relaxed pl-2 border-l-2 border-brand-gold">
+                        Simply browse our 'Vendors' section, choose a service that fits your style and budget, and click 'Book Now'. You'll be connected directly to verify availability and finalize details.
+                    </div>
+                </details>
+                
+                <details class="group p-4 bg-slate-50 rounded-xl cursor-pointer border border-slate-100 transition-all hover:bg-white hover:shadow-md" open>
+                    <summary class="flex justify-between items-center font-bold text-slate-800 list-none text-sm md:text-base">
+                        <span>Is there a booking fee?</span>
+                        <span class="transition group-open:rotate-180 text-brand-gold"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-slate-600 mt-3 text-sm leading-relaxed pl-2 border-l-2 border-brand-gold">
+                        No! Using the Decor My Event platform is completely free for customers. <strong>No fees will be taken directly from you.</strong> You pay the vendor directly as per agreed terms.
+                    </div>
+                </details>
+
+                <details class="group p-4 bg-slate-50 rounded-xl cursor-pointer border border-slate-100 transition-all hover:bg-white hover:shadow-md">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 list-none text-sm md:text-base">
+                        <span>Can I customize the decoration packages?</span>
+                        <span class="transition group-open:rotate-180 text-brand-gold"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-slate-600 mt-3 text-sm leading-relaxed pl-2 border-l-2 border-brand-gold">
+                        Absolutely! Most of our vendors offer customizable packages. You can discuss your specific color themes, flower choices, and layout preferences directly with them after connecting.
+                    </div>
+                </details>
+                
+                <details class="group p-4 bg-slate-50 rounded-xl cursor-pointer border border-slate-100 transition-all hover:bg-white hover:shadow-md">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 list-none text-sm md:text-base">
+                        <span>What if I need to cancel?</span>
+                        <span class="transition group-open:rotate-180 text-brand-gold"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-slate-600 mt-3 text-sm leading-relaxed pl-2 border-l-2 border-brand-gold">
+                        Cancellation policies vary by vendor. We recommend discussing the cancellation and refund policy with the specific vendor before making an advance payment.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendor Join CTA -->
+    <section id="vendor-join" class="py-20 relative overflow-hidden bg-brand-purple">
+        <!-- Background Patterns -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-gold rounded-full filter blur-[80px] opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center reveal">
+            <div class="inline-block p-4 rounded-full bg-white/10 mb-6 backdrop-blur-sm border border-white/20">
+                <i class="fa-solid fa-handshake text-3xl text-brand-gold"></i>
+            </div>
+            <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-6">Grow Your Business With Us</h2>
+            <p class="text-lg text-gray-300 mb-10 font-light max-w-xl mx-auto">
+                Are you a talented decorator, caterer, or photographer in <span class="font-bold text-brand-gold">Satna</span>? 
+                Join our platform to reach more customers and manage bookings effortlessly.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5 items-center">
+                <!-- WhatsApp Redirect -->
+                <a href="https://wa.me/918827921967?text=Hi,%20I%20am%20interested%20in%20joining%20Decor%20My%20Event%20as%20a%20vendor!" target="_blank" class="bg-brand-gold text-white font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition-all transform hover:-translate-y-1 shadow-xl w-full sm:w-auto flex items-center justify-center gap-2 text-base">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Join as Vendor
+                </a>
+                
+                <!-- Toggle Description -->
+                <button onclick="toggleHowItWorks()" class="border border-white/30 text-white font-bold py-4 px-10 rounded-full hover:bg-white/10 transition-colors w-full sm:w-auto text-base">
+                    How it Works
+                </button>
+            </div>
+
+            <!-- Hidden Description -->
+            <div id="how-it-works-text" class="hidden mt-8 bg-white/10 p-8 rounded-xl border border-white/10 backdrop-blur-md max-w-xl mx-auto transition-all duration-500 ease-in-out text-left">
+                <h4 class="text-brand-gold font-bold mb-2">Vendor Process:</h4>
+                <ul class="text-gray-300 space-y-2 text-sm">
+                    <li>1. <strong>Register:</strong> Click the button above to chat with us on WhatsApp.</li>
+                    <li>2. <strong>Verification:</strong> We verify your portfolio and past work.</li>
+                    <li>3. <strong>Listing:</strong> Your services go live for hundreds of customers to see.</li>
+                    <li>4. <strong>Growth:</strong> Get direct leads and grow your brand.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 reveal">
+            <div class="text-center mb-10">
+                <h2 class="font-serif text-3xl font-bold text-slate-900 mb-2">Start Planning Today</h2>
+                <p class="text-slate-500 text-sm">Fill out the form below and we'll help you get started.</p>
+            </div>
+
+            <!-- Form Container -->
+            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-gold to-brand-purple"></div>
+                
+                <form id="contactForm" onsubmit="sendMail(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="name">Name</label>
+                            <input class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors" id="name" type="text" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="phone">Phone</label>
+                            <input class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors" id="phone" type="tel" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="type">Event Type</label>
+                        <select class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors appearance-none cursor-pointer" id="type">
+                            <option>Wedding</option>
+                            <option>Birthday Party</option>
+                            <option>Anniversary Celebration</option>
+                            <option>Romantic Proposal</option>
+                            <option>Corporate Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="message">Message</label>
+                        <textarea class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors h-32 resize-none" id="message" placeholder="Tell us about your dates, venue ideas, or specific requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-gold hover:bg-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-orange-500/30 transform transition hover:-translate-y-1 text-sm uppercase tracking-wide">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark pt-16 pb-8 border-t border-gray-800 text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                        <span class="font-serif text-2xl font-bold text-white">Decor My <span class="text-brand-gold">Event</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Satna's premier digital event solution. Beautiful, accessible, and stress-free event planning for everyone.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Services</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Wedding Decor</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Birthday Parties</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Catering Services</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-brand-gold transition-colors">Contact</a></li>
+                        <li><a href="vendors.html" class="hover:text-brand-gold transition-colors">Find Vendors</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Get in Touch</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-brand-gold"></i> Satna, Madhya Pradesh, India</li>
+                        <li><a href="mailto:decormyevent11@gmail.com" class="hover:text-white flex items-center"><i class="fa-solid fa-envelope mr-3 text-brand-gold"></i> decormyevent11@gmail.com</a></li>
+                        <li><a href="tel:+918827921967" class="hover:text-white flex items-center"><i class="fa-solid fa-phone mr-3 text-brand-gold"></i> +91 88279 21967</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-xs">
+                &copy; 2025 Decor My Event.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Toggle How It Works Description
+        function toggleHowItWorks() {
+            const desc = document.getElementById('how-it-works-text');
+            if (desc.classList.contains('hidden')) {
+                desc.classList.remove('hidden');
+                desc.classList.add('block');
+            } else {
+                desc.classList.add('hidden');
+                desc.classList.remove('block');
+            }
+        }
+
+        // Send Email functionality
+        function sendMail(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const type = document.getElementById('type').value;
+            const message = document.getElementById('message').value;
+            window.location.href = `mailto:decormyevent11@gmail.com?subject=Inquiry from ${name}&body=Name: ${name}%0D%0APhone: ${phone}%0D%0AType: ${type}%0D%0AMessage: ${message}`;
+        }
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

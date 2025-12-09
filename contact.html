@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Decor My Event</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom Config & Styles (Consistent with other pages) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050810',
+                            purple: '#2e1065',
+                            gold: '#d97706',
+                            goldlight: '#fbbf24',
+                            rose: '#fff1f2',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Settings */
+        html { font-size: 16px; }
+        body {
+            background: linear-gradient(180deg, #fff1f2 0%, #ffffff 40%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fff; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Decorative Background Blob */
+        .bg-blob {
+            position: absolute;
+            background: linear-gradient(to right, #fecdd3, #fce7f3);
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Founder Image Frame */
+        .founder-frame {
+            position: relative;
+        }
+        .founder-frame::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -20px;
+            bottom: -20px;
+            left: 20px;
+            border: 2px solid #d97706;
+            z-index: -1;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+        .founder-frame:hover::after {
+            top: 10px;
+            right: -10px;
+            bottom: -10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-gold selection:text-white">
+
+    <!-- Decorative Blobs -->
+    <div class="bg-blob w-96 h-96 top-0 left-0 animate-blob"></div>
+    <div class="bg-blob w-96 h-96 bottom-0 right-0 animate-blob animation-delay-2000"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                    <span class="font-serif text-xl md:text-2xl font-bold text-slate-900 tracking-wide">Decor My <span class="text-brand-gold">Event</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="vendors.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Vendors</a>
+                        <a href="innovation.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Innovation</a>
+                        <a href="index.html#how-it-works" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">How it Works</a>
+                        <a href="contact.html" class="bg-brand-gold text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all transform hover:scale-105 shadow-md hover:shadow-lg shadow-orange-500/20">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-brand-gold p-2 transition-colors">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 absolute w-full shadow-2xl z-50">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Home</a>
+                <a href="vendors.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Vendors</a>
+                <a href="innovation.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Innovation</a>
+                <a href="index.html#how-it-works" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">How it Works</a>
+                <a href="contact.html" class="text-brand-gold font-bold block px-3 py-3 rounded-md text-base">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-32 pb-16 relative">
+        <div class="max-w-4xl mx-auto px-4 text-center reveal">
+            <span class="text-brand-gold font-bold uppercase tracking-widest text-xs border border-brand-gold/30 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-sm">Get In Touch</span>
+            <h1 class="font-serif text-5xl md:text-6xl font-bold text-slate-900 mt-6 mb-6">
+                Let's Plan Your <br> <span class="text-brand-gold italic">Dream Event</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+                Whether you have a specific vision or need inspiration, we are here to help you every step of the way. Reach out to us today.
+            </p>
+        </div>
+    </section>
+
+    <!-- Innovator + Founder Section -->
+    <section class="py-16 bg-white/50 border-y border-rose-100/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+                
+                <!-- Founder Image -->
+                <div class="w-full md:w-5/12 reveal">
+                    <div class="founder-frame relative mx-auto max-w-sm">
+                        <div class="rounded-2xl overflow-hidden shadow-xl aspect-[3/4] bg-slate-100 relative group">
+                            <!-- Placeholder image for Founder - Replace with actual photo -->
+                            <img src="admin.webp" alt="Anusha Gautam" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-purple/80 to-transparent opacity-60"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <p class="font-serif italic text-lg opacity-90">"Every detail matters."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Founder Text -->
+                <div class="w-full md:w-7/12 reveal">
+                    <div class="inline-flex items-center gap-2 text-brand-gold font-bold uppercase tracking-widest text-xs mb-3">
+                        <i class="fa-solid fa-star"></i> Leadership
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-slate-900 mb-2">Anusha Gautam</h2>
+                    <p class="text-slate-500 font-medium text-lg mb-6 tracking-wide">Innovator + Founder</p>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-rose-100 relative">
+                        <i class="fa-solid fa-quote-left text-4xl text-rose-100 absolute -top-4 -left-2"></i>
+                        <p class="text-slate-600 leading-relaxed text-lg relative z-10">
+                            Anusha is the visionary heart behind <strong>Decor My Event</strong>, founded with a passion to revolutionize how Satna celebrates. With a keen eye for aesthetics and a deep understanding of local artistry, she built this platform to bridge the gap between dream concepts and seamless execution. Her mission is simple yet profound: to make luxury accessible and to ensure that every event tells a unique, personal story that lingers in memories long after the lights go down.
+                        </p>
+                        
+                        <!-- Signature (Visual Touch) -->
+                        <div class="mt-6 font-serif text-2xl text-brand-gold italic opacity-80">
+                            - Anusha G.
+                        </div>
+                    </div>
+
+                    <!-- Direct Connect -->
+                    <div class="mt-8 flex gap-4">
+                        <a href="https://wa.me/918827921967" class="text-sm font-bold text-slate-500 hover:text-brand-gold transition-colors uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Connect Directly
+                        </a>
+                        <a href="mailto:decormyevent11@gmail.com" class="text-sm font-bold text-slate-500 hover:text-brand-gold transition-colors uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-lg"></i> Email Founder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Contact Grid -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Contact Info Cards -->
+                <div class="space-y-8 reveal">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-rose-50 hover:border-brand-gold/30 transition-colors group">
+                        <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center text-brand-gold text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Visit Us</h3>
+                        <p class="text-slate-600">Satna, Madhya Pradesh, India</p>
+                        <p class="text-slate-400 text-sm mt-1">Available for meetings by appointment.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-rose-50 hover:border-brand-gold/30 transition-colors group">
+                        <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center text-brand-gold text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-phone-volume"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Call Us</h3>
+                        <p class="text-slate-600 mb-1">Mon-Sun from 9am to 9pm</p>
+                        <a href="tel:+918827921967" class="text-xl font-bold text-brand-gold hover:underline">+91 88279 21967</a>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-rose-50 hover:border-brand-gold/30 transition-colors group">
+                        <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center text-brand-gold text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Email Us</h3>
+                        <p class="text-slate-600 mb-1">For inquiries and vendor partnerships</p>
+                        <a href="mailto:decormyevent11@gmail.com" class="text-lg font-bold text-brand-gold hover:underline">decormyevent11@gmail.com</a>
+                    </div>
+                </div>
+
+                <!-- Contact Form (Reused Style) -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden reveal lg:sticky lg:top-24">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-gold to-brand-purple"></div>
+                    <h3 class="font-serif text-2xl font-bold text-slate-900 mb-6">Send a Message</h3>
+                    
+                    <form id="contactFormPage" onsubmit="sendMailPage(event)">
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="page-name">Name</label>
+                                <input class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors" id="page-name" type="text" placeholder="Your Name" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="page-phone">Phone</label>
+                                    <input class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors" id="page-phone" type="tel" placeholder="+91..." required>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="page-type">Interest</label>
+                                    <select class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors appearance-none cursor-pointer" id="page-type">
+                                        <option>Wedding Decor</option>
+                                        <option>Birthday Party</option>
+                                        <option>Vendor Joining</option>
+                                        <option>General Inquiry</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-500 text-xs font-bold mb-2 uppercase tracking-wide" for="page-message">Message</label>
+                                <textarea class="w-full bg-slate-50 text-slate-900 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors h-32 resize-none" id="page-message" placeholder="How can we help you?"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-slate-900 hover:bg-brand-gold text-white font-bold py-4 rounded-xl shadow-lg transform transition-all hover:-translate-y-1 text-sm uppercase tracking-wide">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Action Area -->
+    <section class="py-12 bg-brand-gold relative overflow-hidden mt-10">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+                <h2 class="font-serif text-3xl font-bold text-white mb-2">Prefer chatting instantly?</h2>
+                <p class="text-white/80">Our team is active on WhatsApp to answer your queries.</p>
+            </div>
+            
+            <!-- Attractive Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                 <a href="tel:+918827921967" class="bg-white text-brand-gold font-bold py-3 px-8 rounded-full shadow-lg hover:bg-slate-50 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-phone"></i> Call Now
+                </a>
+                <a href="https://wa.me/918827921967?text=Hello%20Decor%20My%20Event,%20I%20have%20an%20inquiry." target="_blank" class="bg-[#25D366] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#20bd5a] transition-all transform hover:scale-105 flex items-center justify-center gap-2 animate-pulse-slow">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark pt-16 pb-8 border-t border-gray-800 text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                        <span class="font-serif text-2xl font-bold text-white">Decor My <span class="text-brand-gold">Event</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Satna's premier digital event solution. Beautiful, accessible, and stress-free event planning for everyone.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Services</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Wedding Decor</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Birthday Parties</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Catering Services</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-brand-gold transition-colors text-brand-gold">Contact</a></li>
+                        <li><a href="vendors.html" class="hover:text-brand-gold transition-colors">Find Vendors</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Get in Touch</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-brand-gold"></i> Satna, Madhya Pradesh, India</li>
+                        <li><a href="mailto:decormyevent11@gmail.com" class="hover:text-white flex items-center"><i class="fa-solid fa-envelope mr-3 text-brand-gold"></i> decormyevent11@gmail.com</a></li>
+                        <li><a href="tel:+918827921967" class="hover:text-white flex items-center"><i class="fa-solid fa-phone mr-3 text-brand-gold"></i> +91 88279 21967</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-xs">
+                &copy; 2025 Decor My Event. 
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        if(btn) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+
+        // Sticky Navbar Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Send Email functionality for this page
+        function sendMailPage(event) {
+            event.preventDefault();
+            const name = document.getElementById('page-name').value;
+            const phone = document.getElementById('page-phone').value;
+            const type = document.getElementById('page-type').value;
+            const message = document.getElementById('page-message').value;
+            window.location.href = `mailto:decormyevent11@gmail.com?subject=Contact Inquiry from ${name}&body=Name: ${name}%0D%0APhone: ${phone}%0D%0AType: ${type}%0D%0AMessage: ${message}`;
+        }
+    </script>
+</body>
+</html>

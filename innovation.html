@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation | Decor My Event</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom Config & Styles (Same as Index) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#050810',
+                            purple: '#2e1065',
+                            gold: '#d97706',
+                            goldlight: '#fbbf24',
+                            rose: '#fff1f2',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Settings */
+        html { font-size: 16px; }
+        body {
+            background: linear-gradient(180deg, #fff1f2 0%, #ffffff 40%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fff; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Slot Placeholder Styling */
+        .image-slot {
+            background-color: #f1f5f9;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .image-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .image-slot:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-gold selection:text-white">
+
+    <!-- Navbar (Consistent with Index) -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                    <span class="font-serif text-xl md:text-2xl font-bold text-slate-900 tracking-wide">Decor My <span class="text-brand-gold">Event</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="vendors.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Vendors</a>
+                        <a href="innovation.html" class="text-brand-gold px-3 py-2 rounded-md text-sm font-bold border-b-2 border-brand-gold">Innovation</a>
+                        <a href="index.html#how-it-works" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">How it Works</a>
+                        <a href="contact.html" class="bg-brand-gold text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all transform hover:scale-105 shadow-md hover:shadow-lg shadow-orange-500/20">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-brand-gold p-2 transition-colors">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 absolute w-full shadow-2xl z-50">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Home</a>
+                <a href="vendors.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Vendors</a>
+                <a href="innovation.html" class="text-brand-gold block px-3 py-3 rounded-md text-base font-bold bg-orange-50">Innovation</a>
+                <a href="index.html#how-it-works" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">How it Works</a>
+                <a href="contact.html" class="text-brand-gold font-bold block px-3 py-3 rounded-md text-base">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Innovation Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Background Element -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-rose-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl opacity-50 -z-10"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center reveal">
+            <span class="text-brand-gold font-bold uppercase tracking-widest text-xs border border-brand-gold/30 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-sm">Exclusive Designs</span>
+            
+            <h1 class="font-serif text-5xl md:text-6xl font-bold text-slate-900 mt-6 mb-8">
+                The Art of <span class="italic text-brand-gold">Innovation</span>
+            </h1>
+            
+            <!-- The Requested Paragraph -->
+            <p class="text-lg md:text-xl text-slate-600 font-light leading-relaxed max-w-2xl mx-auto">
+                At Decor My Event, we believe that true luxury lies in originality. Our Innovation wing is dedicated to crafting bespoke experiences that defy the ordinary. We move beyond standard templates to create immersive environments where every floral arrangement, light fixture, and fabric drape is conceptually aligned to tell your unique story. This is where your wildest imagination meets our meticulous craftsmanship.
+            </p>
+        </div>
+    </section>
+
+    <!-- The Event List (Line by Line Style) -->
+    <section class="py-10 pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+            
+            <!-- 1. Luxury Weddings -->
+            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 order-2 md:order-1">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">01</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Luxury Weddings</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        We don't just decorate venues; we construct dreams. For our signature weddings, we bypass the standard vendor network to bring you an exclusive, in-house production. 
+                        This means every mandap design, aisle concept, and floral installation is executed directly by our core creative team. 
+                        By eliminating middlemen, we ensure that the purity of your vision remains intact, offering you a cohesive aesthetic that feels personal, regal, and utterly unmatched in Satna.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        Inquire Exclusive Design <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <!-- Image Slot -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot order-1 md:order-2">
+                    <!-- INSERT IMAGE HERE: Replace src with your image file -->
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000" alt="Luxury Wedding">
+                </div>
+            </div>
+
+            <!-- 2. Themed Birthday Bashes -->
+            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Image Slot (Left for zig-zag) -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot">
+                    <!-- INSERT IMAGE HERE -->
+                     <img src="bday.webp" alt="Happy Birthday">
+                </div>
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">02</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Themed Birthdays</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        Forget the generic balloons and streamers. Our Innovation team specializes in building immersive birthday worlds, from superhero metropolises to enchanted fairy forests.
+                        We offer this service entirely in-house, meaning no third-party decorators are involved. 
+                        This direct approach allows us to custom-fabricate props and backdrops specifically for your child's imagination, ensuring a celebration that is as unique as they are, delivered with zero friction.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        Plan a Party <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Royal Engagements -->
+            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 order-2 md:order-1">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">03</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Royal Engagements</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        The ring ceremony is the first chapter of your wedding story, and it deserves a setting of intimacy and elegance. 
+                        Our team manages your engagement decor independently, without relying on external vendor availability.
+                        From subtle floral rings to dramatic lighting setups that spotlight your special moment, we handle every detail directly. This guarantees a seamless aesthetic flow and a level of privacy and personalization that standard vendor packages simply cannot match.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        Book Engagement <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <!-- Image Slot -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot order-1 md:order-2">
+                    <!-- INSERT IMAGE HERE -->
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1000" alt="Engagement">
+                </div>
+            </div>
+
+            <!-- 4. Corporate Galas -->
+            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Image Slot -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot">
+                    <!-- INSERT IMAGE HERE -->
+                     <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1000" alt="Corporate Events">
+                </div>
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">04</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Corporate Galas</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        Make a statement that resonates with your brand identity. We offer specialized corporate event styling that is executed entirely by our in-house professionals.
+                        We understand that corporate events require precision, punctuality, and a polished look that reflects your business values.
+                        By removing the variability of outside vendors, we guarantee a sharp, professional setup—whether it’s a product launch or an annual meet—delivered with absolute consistency and corporate-grade reliability.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        Corporate Solutions <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Intimate Anniversaries -->
+            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 order-2 md:order-1">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">05</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Intimate Anniversaries</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        Celebrate your milestones with a touch of magic. Our anniversary setups are designed to rekindle romance, handled exclusively by our design experts.
+                        We offer these curated experiences individually, ensuring that you don't have to deal with multiple vendors for a simple yet stunning celebration.
+                        From candlelit canopy dinners to nostalgic photo walkways, our team takes full ownership of the ambiance, allowing you to focus solely on each other while we handle the atmosphere.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        Plan Surprise <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <!-- Image Slot -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot order-1 md:order-2">
+                    <!-- INSERT IMAGE HERE -->
+                     <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&q=80&w=1000" alt="Luxury Anniversary">
+                </div>
+            </div>
+
+             <!-- 6. Baby Showers -->
+             <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal">
+                <!-- Image Slot -->
+                <div class="w-full md:w-1/2 h-[400px] md:h-[500px] rounded-2xl shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white image-slot">
+                    <!-- INSERT IMAGE HERE -->
+                     <img src="baby.webp" alt="Baby Shower">
+                </div>
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="text-5xl font-serif text-rose-200 font-bold">06</span>
+                        <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Baby Showers</h2>
+                    </div>
+                    <div class="h-1 w-20 bg-brand-gold mb-6"></div>
+                    <p class="text-slate-600 leading-relaxed text-lg mb-6">
+                        Welcome your little one with joy and grace. Our baby shower themes are soft, playful, and crafted entirely by us.
+                        We provide this as a direct service, eliminating the need to coordinate with external decorators. 
+                        Whether you prefer pastel florals or whimsical clouds, our in-house team sets up everything perfectly. We ensure a hygienic, safe, and beautiful environment where you can celebrate the new beginning with your loved ones, stress-free.
+                    </p>
+                    <a href="contact.html" class="inline-flex items-center text-brand-gold font-bold hover:underline underline-offset-4">
+                        View Themes <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Custom Request Call to Action -->
+    <section class="py-20 bg-brand-purple text-center relative overflow-hidden">
+        <!-- Pattern Overlay -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <!-- Light Accents -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-gold rounded-full filter blur-[100px] opacity-20"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-rose-500 rounded-full filter blur-[100px] opacity-20"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 reveal">
+            <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mb-6">Have Something Else in Mind?</h2>
+            <p class="text-lg text-rose-100 mb-10 font-light max-w-2xl mx-auto leading-relaxed">
+                From intimate gatherings to grand spectacles, we can decorate many more events tailored specifically to your unique requirements. 
+                Your vision is our command.
+            </p>
+            <a href="tel:+918827921967" class="inline-flex items-center gap-3 bg-brand-gold text-white font-bold py-4 px-10 rounded-full hover:bg-white hover:text-brand-gold transition-all transform hover:-translate-y-1 shadow-xl text-lg group">
+                <i class="fa-solid fa-phone-volume group-hover:animate-pulse"></i> Call to Customize: +91 88279 21967
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer (Same as Index) -->
+    <footer class="bg-brand-dark pt-16 pb-8 border-t border-gray-800 text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                        <span class="font-serif text-2xl font-bold text-white">Decor My <span class="text-brand-gold">Event</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Satna's premier digital event solution. Beautiful, accessible, and stress-free event planning for everyone.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Services</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Wedding Decor</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Birthday Parties</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Catering Services</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Photography</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-brand-gold transition-colors">Contact</a></li>
+                        <li><a href="vendors.html" class="hover:text-brand-gold transition-colors">Find Vendors</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Get in Touch</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-brand-gold"></i> Satna, Madhya Pradesh, India</li>
+                        <li><a href="mailto:decormyevent11@gmail.com" class="hover:text-white flex items-center"><i class="fa-solid fa-envelope mr-3 text-brand-gold"></i> decormyevent11@gmail.com</a></li>
+                        <li><a href="tel:+918827921967" class="hover:text-white flex items-center"><i class="fa-solid fa-phone mr-3 text-brand-gold"></i> +91 88279 21967</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-xs">
+                &copy; 2025 Decor My Event.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        if(btn) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
+
+        // Sticky Navbar Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
