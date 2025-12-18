@@ -14,9 +14,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Custom Config & Styles (Same as Index) -->
+    <!-- Custom Config & Styles -->
     <script>
         tailwind.config = {
             theme: {
@@ -33,22 +33,6 @@
                     fontFamily: {
                         serif: ['"Playfair Display"', 'serif'],
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'blob': 'blob 7s infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-15px)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
                     }
                 }
             }
@@ -56,8 +40,6 @@
     </script>
 
     <style>
-        /* Base Settings */
-        html { font-size: 16px; }
         body {
             background: linear-gradient(180deg, #fff1f2 0%, #ffffff 40%, #ffffff 100%);
             min-height: 100vh;
@@ -65,31 +47,28 @@
             flex-direction: column;
         }
         
-        /* Custom Scrollbar (Matched to Index) */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #fff; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d97706; }
-
-        /* Glassmorphism */
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Reveal Animation */
+        .glass-card:hover {
+            box-shadow: 0 20px 40px 0 rgba(217, 119, 6, 0.15);
+            border: 1px solid rgba(217, 119, 6, 0.2);
+        }
+
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
@@ -97,182 +76,422 @@
             transform: translateY(0);
         }
 
-        /* Decorative Background Blob (Matched to Index) */
         .bg-blob {
             position: absolute;
             background: linear-gradient(to right, #fecdd3, #fce7f3);
-            filter: blur(80px);
+            filter: blur(100px);
             z-index: -1;
-            opacity: 0.6;
+            opacity: 0.5;
+            border-radius: 50%;
+        }
+
+        .btn-fancy {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-fancy:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.4);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .btn-fancy:hover:after {
+            animation: ripple 1s ease-out;
+        }
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 1; }
+            20% { transform: scale(25, 25); opacity: 1; }
+            100% { opacity: 0; transform: scale(40, 40); }
+        }
+
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: transparent; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        
+        .modal-overlay {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
         }
     </style>
 </head>
-<body class="text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-gold selection:text-white">
+<body class="text-slate-800 font-sans antialiased overflow-x-hidden">
 
-    <!-- Decorative Blobs (Same as Index) -->
-    <div class="bg-blob w-96 h-96 top-0 left-0 animate-blob"></div>
-    <div class="bg-blob w-96 h-96 bottom-0 right-0 animate-blob animation-delay-2000"></div>
+    <!-- Decorative Elements -->
+    <div class="bg-blob w-[500px] h-[500px] -top-64 -left-32"></div>
+    <div class="bg-blob w-[400px] h-[400px] top-1/2 -right-32 opacity-30"></div>
 
-    <!-- Navbar (Consistent with Index) -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex-shrink-0 cursor-pointer flex items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl animate-pulse"></i>
                     <span class="font-serif text-xl md:text-2xl font-bold text-slate-900 tracking-wide">Decor My <span class="text-brand-gold">Event</span></span>
                 </a>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="index.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="index.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-all">Home</a>
                         <a href="vendors.html" class="text-brand-gold px-3 py-2 rounded-md text-sm font-bold border-b-2 border-brand-gold">Vendors</a>
-                        <a href="innovation.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Innovation</a>
-                        <a href="index.html#how-it-works" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">How it Works</a>
-                        <a href="contact.html" class="bg-brand-gold text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all transform hover:scale-105 shadow-md hover:shadow-lg shadow-orange-500/20">Contact Us</a>
+                        <a href="innovation.html" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-all">Innovation</a>
+                        <a href="index.html#how-it-works" class="text-slate-600 hover:text-brand-gold px-3 py-2 rounded-md text-sm font-medium transition-all">How it Works</a>
+                        <a href="contact.html" class="bg-brand-gold text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg hover:shadow-orange-500/30 transition-all hover:-translate-y-0.5 btn-fancy">Contact Us</a>
                     </div>
                 </div>
 
-                <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-brand-gold p-2 transition-colors">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
+                    <button id="mobile-menu-btn" class="text-slate-700 p-2"><i class="fa-solid fa-bars text-xl"></i></button>
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 absolute w-full shadow-2xl z-50">
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-t absolute w-full z-50 shadow-2xl">
             <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="index.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Home</a>
-                <a href="vendors.html" class="text-brand-gold block px-3 py-3 rounded-md text-base font-bold bg-orange-50">Vendors</a>
-                <a href="innovation.html" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">Innovation</a>
-                <a href="index.html#how-it-works" class="text-slate-700 hover:text-brand-gold block px-3 py-3 rounded-md text-base font-medium">How it Works</a>
-                <a href="contact.html" class="text-brand-gold font-bold block px-3 py-3 rounded-md text-base">Contact Us</a>
+                <a href="index.html" class="block px-3 py-3 font-medium">Home</a>
+                <a href="vendors.html" class="block px-3 py-3 font-bold text-brand-gold bg-orange-50 rounded-lg">Vendors</a>
+                <a href="innovation.html" class="block px-3 py-3 font-medium">Innovation</a>
+                <a href="index.html#how-it-works" class="block px-3 py-3 font-medium">How it Works</a>
+                <a href="contact.html" class="block px-3 py-3 font-bold text-brand-gold">Contact Us</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content Area -->
-    <div class="flex-grow flex items-center justify-center relative pt-20 pb-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 w-full text-center relative z-10">
+    <main class="flex-grow pt-32 pb-12 px-4">
+        <div class="max-w-7xl mx-auto">
             
-            <!-- Animated Icon -->
-            <div class="mb-8 reveal">
-                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto shadow-xl animate-float border-4 border-rose-50">
-                    <i class="fa-solid fa-store-slash text-4xl text-brand-gold/50"></i>
-                </div>
+            <div class="text-center mb-16 reveal active">
+                <span class="inline-block px-4 py-1.5 bg-brand-gold/10 text-brand-gold text-xs font-bold rounded-full uppercase tracking-widest mb-4">Curated Excellence</span>
+                <h1 class="font-serif text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">Our Premium <br><span class="text-brand-gold italic">Vendor Network</span></h1>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">We partner with the finest artisans in Satna to bring your celebration to life. Click a profile to explore their portfolio.</p>
             </div>
 
-            <!-- Headline -->
-            <h1 class="font-serif text-4xl md:text-6xl font-bold text-slate-900 mb-6 reveal tracking-tight">
-                Vendor Network <br>
-                <span class="text-brand-gold italic">Coming Soon</span>
-            </h1>
-
-            <!-- The Main Message Box -->
-            <div class="glass-card p-8 md:p-12 rounded-3xl mb-10 reveal transform transition-all hover:scale-[1.01]" style="transition-delay: 100ms;">
-                <div class="inline-block p-2 rounded-full bg-brand-gold/10 text-brand-gold mb-4">
-                    <i class="fa-solid fa-circle-info text-xl"></i>
+            <!-- VENDOR GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 reveal active">
+                
+                <!-- Vendor Card 1 -->
+                <div onclick="openVendor('vendor1')" class="glass-card rounded-[2.5rem] overflow-hidden cursor-pointer group hover:-translate-y-3">
+                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
+                        <img src="vendor1_profile.jpeg" alt="Manku Events" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400x500?text=Elite+Decorators'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> View Portfolio
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-gold transition-colors">Manku Events</h3>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-black">Luxury Specialists</p>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold text-slate-800 mb-4">Important Update</h3>
-                <p class="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
-                    "We haven't onboarded external vendors yet, <br class="hidden md:block" /> 
-                    but our <span class="text-brand-gold font-bold underline decoration-wavy underline-offset-4">services are fully active!</span>"
-                </p>
-                <p class="mt-4 text-slate-500 text-sm md:text-base">
-                    You can contact us directly to inquire about any event or decoration requirements. We are fully prepared to make your event memorable.
-                </p>
+
+                <!-- Vendor Card 2 -->
+                <div onclick="openVendor('vendor2')" class="glass-card rounded-[2.5rem] overflow-hidden cursor-pointer group hover:-translate-y-3">
+                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
+                        <img src="vendor2_profile.jpeg" alt="Akhilesh flowers decoration" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400x500?text=Dream+Weddings'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> View Portfolio
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-gold transition-colors">Akhilesh Flowers Decoration</h3>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-black">Wedding Craft</p>
+                    </div>
+                </div>
+
+                <!-- Vendor Card 3 -->
+                <div onclick="openVendor('vendor3')" class="glass-card rounded-[2.5rem] overflow-hidden cursor-pointer group hover:-translate-y-3">
+                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
+                        <img src="vendor3_profile.jpeg" alt="Shree Ram Events" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400x500?text=Satna+Bloomers'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> View Portfolio
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-gold transition-colors">Shree Ram Events</h3>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-black">Floral Art</p>
+                    </div>
+                </div>
+
+                <!-- Vendor Card 4 -->
+                <div onclick="openVendor('vendor4')" class="glass-card rounded-[2.5rem] overflow-hidden cursor-pointer group hover:-translate-y-3">
+                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
+                        <img src="vendor4_profile.jpeg" alt="Sparkle Events" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400x500?text=Sparkle+Events'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> View Portfolio
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-gold transition-colors">Sparkle Events</h3>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-black">Party Planning</p>
+                    </div>
+                </div>
+
+                <!-- Vendor Card 5 -->
+                <div onclick="openVendor('vendor5')" class="glass-card rounded-[2.5rem] overflow-hidden cursor-pointer group hover:-translate-y-3">
+                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
+                        <img src="vendor5_profile.jpeg" alt="Sunil Decorators" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/400x500?text=Royal+Setups'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> View Portfolio
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-slate-900 text-lg group-hover:text-brand-gold transition-colors">Sunil Decorators</h3>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-[0.2em] font-black">Royal Themes</p>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal" style="transition-delay: 200ms;">
-                <a href="tel:+918827921967" class="w-full sm:w-auto bg-slate-900 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-phone"></i> Call Now
-                </a>
-                <a href="https://wa.me/919479983215?text=Hi,%20I%20want%20to%20know%20more%20about%20your%20services." target="_blank" class="w-full sm:w-auto bg-[#25D366] text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#20bd5a] transition-all flex items-center justify-center gap-3">
-                    <i class="fa-brands fa-whatsapp text-xl"></i> Chat on WhatsApp
-                </a>
+            <!-- ENHANCED ONBOARDING NOTICE -->
+            <div class="mt-28 py-20 border-t border-slate-200/60 reveal active">
+                <div class="glass-card p-12 md:p-20 rounded-[4rem] text-center max-w-5xl mx-auto relative overflow-hidden group border-brand-gold/20 bg-white/60">
+                    <!-- Background Glow -->
+                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-brand-gold/10 blur-[80px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="mb-8 flex justify-center">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-brand-gold/20 blur-xl rounded-full scale-150 animate-pulse"></div>
+                                <i class="fa-solid fa-users-gear text-6xl text-brand-gold relative"></i>
+                            </div>
+                        </div>
+                        
+                        <h3 class="font-serif text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Expanding Our Circle</h3>
+                        
+                        <div class="max-w-3xl mx-auto mb-10">
+                            <p class="text-slate-700 text-xl md:text-3xl font-medium leading-relaxed italic font-serif">
+                                "All the other vendors are not listed yet, <br class="hidden md:block">
+                                <span class="text-brand-gold font-bold not-italic block mt-2 underline decoration-brand-gold/30 underline-offset-8">we are working on it right now!"</span>
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row gap-6 justify-center items-center pt-10 border-t border-slate-200/50">
+                            <div class="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-md border border-brand-gold/10">
+                                <span class="relative flex h-3 w-3">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-gold"></span>
+                                </span>
+                                <span class="text-sm font-bold text-slate-900 uppercase tracking-widest">Live Onboarding</span>
+                            </div>
+                            <p class="text-slate-500 text-base font-semibold">New premium portfolios are added every week. Stay tuned!</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
+    </main>
+
+    <!-- FIXED FANCY MODAL COMPONENT -->
+    <div id="vendor-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-8">
+        <div class="modal-overlay absolute inset-0" onclick="closeVendor()"></div>
+        <!-- Max height managed for all screen sizes -->
+        <div class="glass-card w-full max-w-5xl h-full max-h-[90vh] md:max-h-[85vh] rounded-[3rem] overflow-hidden relative z-10 flex flex-col md:flex-row animate-[scaleIn_0.4s_ease-out] shadow-2xl">
+            
+            <!-- Modal Sidebar (Information Section - Corrected for Visibility) -->
+            <div class="w-full md:w-80 bg-slate-50 p-8 flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-slate-200 overflow-y-auto modal-scroll shrink-0">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white mb-6 transform hover:rotate-2 transition-transform shadow-brand-gold/20">
+                    <img id="modal-profile-img" src="" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <h2 id="modal-title" class="font-serif text-2xl font-bold text-slate-900 mb-2">Vendor Name</h2>
+                <div class="inline-flex items-center gap-1 text-brand-gold text-xs font-bold uppercase tracking-tighter mb-8">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <span class="ml-2 text-slate-500 font-bold">(4.8/5)</span>
+                </div>
+                
+                <div class="space-y-4 w-full text-left pb-4">
+                    <!-- Address Block (High contrast) -->
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                        <p class="text-[10px] text-brand-gold uppercase font-black tracking-widest mb-2">Operating From</p>
+                        <p id="modal-address" class="text-slate-900 text-sm font-bold leading-snug">Address Details</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200">
+                        <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-2">Availability</p>
+                        <p class="text-slate-900 text-sm font-bold flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                            Accepting Bookings
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Updated Hire Vendor Button with dynamic WhatsApp redirect -->
+                <a id="modal-hire-btn" target="_blank" href="#" class="mt-auto w-full bg-slate-900 text-white py-5 rounded-[2rem] font-bold hover:bg-brand-gold transition-all flex items-center justify-center gap-2 shadow-xl hover:shadow-brand-gold/30 btn-fancy">
+                    <i class="fa-solid fa-paper-plane"></i> Hire Vendor
+                </a>
+            </div>
+
+            <!-- Modal Gallery Section -->
+            <div class="flex-grow flex flex-col overflow-hidden bg-white">
+                <div class="p-6 md:p-8 flex justify-between items-center border-b border-slate-100 bg-white/90 backdrop-blur-md shrink-0">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-4">
+                        <span class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-brand-gold text-white flex items-center justify-center shadow-lg shadow-brand-gold/20">
+                            <i class="fa-solid fa-images text-xl"></i>
+                        </span>
+                        <div class="flex flex-col">
+                            <span class="text-base md:text-lg">Project Showcase</span>
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Selected Works</span>
+                        </div>
+                    </h4>
+                    <button onclick="closeVendor()" class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-brand-gold transition-all hover:bg-white hover:shadow-lg border border-slate-100">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6 md:p-10 overflow-y-auto modal-scroll flex-grow">
+                    <div id="modal-gallery" class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Gallery content dynamic -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Footer (Same as Index) -->
-    <footer class="bg-brand-dark pt-16 pb-8 border-t border-gray-800 text-gray-300 mt-auto">
+    <!-- Footer -->
+    <footer class="bg-brand-dark pt-20 pb-10 border-t border-gray-800 text-gray-300 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-xl"></i>
-                        <span class="font-serif text-2xl font-bold text-white">Decor My <span class="text-brand-gold">Event</span></span>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-gold text-2xl"></i>
+                        <span class="font-serif text-3xl font-bold text-white">Decor My <span class="text-brand-gold">Event</span></span>
                     </div>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Satna's premier digital event solution. Beautiful, accessible, and stress-free event planning for everyone.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-brand-gold transition-colors"><i class="fa-brands fa-whatsapp text-xl"></i></a>
-                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-xs">Satna's premier digital event solution. Connecting you with the city's finest decoration experts.</p>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Services</h4>
-                    <ul class="space-y-3 text-sm text-gray-500">
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Wedding Decor</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Birthday Parties</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Catering Services</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Photography</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Company</h4>
-                    <ul class="space-y-3 text-sm text-gray-500">
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-brand-gold transition-colors">Contact</a></li>
-                        <li><a href="vendors.html" class="hover:text-brand-gold transition-colors text-brand-gold">Find Vendors</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Get in Touch</h4>
+                    <h4 class="text-white font-bold mb-8 text-sm uppercase tracking-widest">Services</h4>
                     <ul class="space-y-4 text-sm text-gray-500">
-                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-brand-gold"></i> Satna, Madhya Pradesh, India</li>
-                        <li><a href="mailto:decormyevent11@gmail.com" class="hover:text-white flex items-center"><i class="fa-solid fa-envelope mr-3 text-brand-gold"></i> decormyevent11@gmail.com</a></li>
-                        <li><a href="tel:+919479983215" class="hover:text-white flex items-center"><i class="fa-solid fa-phone mr-3 text-brand-gold"></i> +91 94799 83215</a></li>
+                        <li class="hover:text-brand-gold transition-colors cursor-pointer">Wedding Decor</li>
+                        <li class="hover:text-brand-gold transition-colors cursor-pointer">Corporate Events</li>
+                        <li class="hover:text-brand-gold transition-colors cursor-pointer">Birthday Themes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-8 text-sm uppercase tracking-widest">Navigation</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
+                        <li><a href="index.html" class="hover:text-brand-gold transition-colors">Home</a></li>
+                        <li><a href="vendors.html" class="text-brand-gold font-bold">Find Vendors</a></li>
+                        <li><a href="innovation.html" class="hover:text-brand-gold transition-colors">Innovation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-8 text-sm uppercase tracking-widest">Connect</h4>
+                    <ul class="space-y-5 text-sm text-gray-500">
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-4 text-brand-gold"></i> Satna, MP, India</li>
+                        <li><a href="mailto:decormyevent11@gmail.com" class="hover:text-white transition-colors"><i class="fa-solid fa-envelope mr-4 text-brand-gold"></i> decormyevent11@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-600 text-xs">
-                &copy; 2025 Decor My Event.
+            <div class="border-t border-gray-800/50 pt-10 text-center text-gray-600 text-xs tracking-widest uppercase">
+                &copy; 2025 Decor My Event. Handcrafted with passion in Satna.
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const vendors = {
+            'vendor1': {
+                name: 'Manku Events',
+                address: 'Plot 42, Civil Lines, Satna, MP',
+                profileImg: 'vendor1_profile.jpeg',
+                gallery: ['decor1_1.jpeg', 'decor1_2.jpeg', 'decor1_3.jpeg', 'decor1_4.jpeg']
+            },
+            'vendor2': {
+                name: 'Akhilesh Flowers Decoration',
+                address: 'Main Rewa Road, Near City Mall, Satna',
+                profileImg: 'vendor2_profile.jpeg',
+                gallery: ['decor2_1.jpeg', 'decor2_2.jpeg', 'decor2_3.jpeg']
+            },
+            'vendor3': {
+                name: 'Shree Ram Events',
+                address: 'Ganesh Chowk, Market Area, Satna, MP',
+                profileImg: 'vendor3_profile.jpeg',
+                gallery: ['decor3_1.jpeg', 'decor3_2.jpeg', 'decor3_3.jpeg']
+            },
+            'vendor4': {
+                name: 'Sparkle Events',
+                address: 'Panna Road, Opposite Reliance Mall, Satna',
+                profileImg: 'vendor4_profile.jpeg',
+                gallery: ['decor4_1.jpeg', 'decor4_2.jpeg', 'decor4_3.jpeg', 'decor4_4.jpeg']
+            },
+            'vendor5': {
+                name: 'Sunil Decorators',
+                address: 'Sector 4, Sherganj, Satna, MP',
+                profileImg: 'vendor5_profile.jpeg',
+                gallery: ['decor5_1.jpeg', 'decor5_2.jpeg', 'decor5_3.jpeg']
+            }
+        };
 
-        if(btn) {
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
+        const modal = document.getElementById('vendor-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalAddress = document.getElementById('modal-address');
+        const modalProfileImg = document.getElementById('modal-profile-img');
+        const modalGallery = document.getElementById('modal-gallery');
+        const modalHireBtn = document.getElementById('modal-hire-btn');
+
+        function openVendor(id) {
+            const data = vendors[id];
+            if(!data) return;
+
+            modalTitle.innerText = data.name;
+            modalAddress.innerText = data.address;
+            modalProfileImg.src = data.profileImg;
+
+            // Generate WhatsApp message and set hiring link
+            const whatsappNumber = "919479983215";
+            const message = `Hello Decor My Event team, I would like to hire ${data.name} located at ${data.address}. Please help me with the hiring process.`;
+            const encodedMessage = encodeURIComponent(message);
+            modalHireBtn.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            modalGallery.innerHTML = '';
+            data.gallery.forEach(imgName => {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'group relative aspect-square bg-slate-100 rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100';
+                imgDiv.innerHTML = `
+                    <img src="${imgName}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://via.placeholder.com/300x300?text=Project+Shot'">
+                    <div class="absolute inset-0 bg-brand-gold/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-3xl drop-shadow-lg"></i>
+                    </div>
+                `;
+                modalGallery.appendChild(imgDiv);
             });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Sticky Navbar Effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-lg');
-            } else {
-                navbar.classList.remove('shadow-lg');
-            }
+        function closeVendor() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        // Scroll Reveal Animation
         const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries, observer) => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
@@ -281,5 +500,12 @@
         }, { threshold: 0.1 });
         revealElements.forEach(el => revealObserver.observe(el));
     </script>
+
+    <style>
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </body>
 </html>
